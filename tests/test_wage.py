@@ -59,10 +59,10 @@ def test_bad_rate():
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
     check_error(error, 'Input should be a valid decimal')
-    test_bad_currency['rate'] = '0.0'
+    test_bad_currency['rate'] = '-123.45'
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
-    check_error(error, 'Input should be greater than 0.0')
+    check_error(error, 'Input should be greater than or equal to 0.0')
     test_bad_currency['rate'] = '12.456'
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
@@ -79,10 +79,10 @@ def test_bad_fringe():
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
     check_error(error, 'Input should be a valid decimal')
-    test_bad_currency['fringe'] = '0.0'
+    test_bad_currency['fringe'] = '-12.34'
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
-    check_error(error, 'Input should be greater than 0.0')
+    check_error(error, 'Input should be greater than or equal to 0.0')
     test_bad_currency['fringe'] = '12.456'
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
