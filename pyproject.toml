@@ -1,6 +1,6 @@
 [project]
 name = "usdol-wage-determination-model"
-version = "0.1.0"
+version = "0.2.0"
 description = "Pydantic model for USDOL prevailing wage determination records"
 readme = "README.md"
 authors = [
@@ -39,4 +39,4 @@ target-version = "py311"
 select = ["E", "F", "N", "S"]
 
 [tool.ruff.lint.per-file-ignores]
-"**/test_*" = ["S101"]
+"tests/**" = ["S101"]

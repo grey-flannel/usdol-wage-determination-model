@@ -22,8 +22,9 @@ class WageDetermination(BaseModel):
     publication_date: date
     effective: DateRange
     active: bool
-    location: Location
     construction_types: conset(item_type=ConstructionType, min_length=1)
+    location: Location
     rate_identifier: str
+    survey_date: date
     job: Job
     wage: Wage

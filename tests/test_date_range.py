@@ -3,19 +3,16 @@ from datetime import date
 from pydantic import ValidationError
 from pytest import raises
 
-from usdol_wage_determination_model.date_range import DateRange
+from .common import check_error
+from .data import test_date_range
 
-
-def check_error(error, expected_message):
-    validation_errors = error.value.errors()
-    assert len(validation_errors) == 1
-    assert validation_errors[0]['msg'] == expected_message
+from usdol_wage_determination_model import DateRange
 
 
 def test_basic():
-    date_range = DateRange(start_date='2025-01-01', end_date='2025-01-31')
-    assert date_range.start_date == date(year=2025, month=1, day=1)
-    assert date_range.end_date == date(year=2025, month=1, day=31)
+    date_range = DateRange(**test_date_range)
+    assert date_range.start_date == date.fromisoformat(test_date_range['start_date'])
+    assert date_range.end_date == date.fromisoformat(test_date_range['end_date'])
 
 
 def test_same_day():
