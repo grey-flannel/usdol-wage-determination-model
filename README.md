@@ -9,6 +9,8 @@ Pydantic model for USDOL prevailing wage determination records
 uv run safety scan
 uv run ruff check
 uv run -m pytest -vv --cov=src --cov-report=term --cov-report=xml
+uv build
+uv publish -t $(keyring get https://upload.pypi.org/legacy/ __token__)
 ```
 
 

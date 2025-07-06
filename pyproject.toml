@@ -1,6 +1,6 @@
 [project]
 name = "usdol-wage-determination-model"
-version = "0.2.0"
+version = "0.2.1"
 description = "Pydantic model for USDOL prevailing wage determination records"
 readme = "README.md"
 authors = [
@@ -19,6 +19,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "keyring>=25.6.0",
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
     "ruff>=0.12.0",
