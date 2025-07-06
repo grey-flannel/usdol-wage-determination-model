@@ -38,9 +38,7 @@ test_wage_determination = {
     },
     'active': True,
     'location': test_location,
-    'construction_types': [
-        'building',
-    ],
+    'construction_type': 'building',
     'rate_identifier': 'SUCA2025-100',
     'survey_date': '2024-01-01',
     'job': test_job,

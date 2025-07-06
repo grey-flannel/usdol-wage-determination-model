@@ -1,7 +1,7 @@
 from datetime import date
 from enum import StrEnum
 
-from pydantic import BaseModel, conset, Field, NonNegativeInt
+from pydantic import BaseModel, Field, NonNegativeInt
 
 from .date_range import DateRange
 from .job import Job
@@ -22,7 +22,7 @@ class WageDetermination(BaseModel):
     publication_date: date
     effective: DateRange
     active: bool
-    construction_types: conset(item_type=ConstructionType, min_length=1)
+    construction_type: ConstructionType
     location: Location
     rate_identifier: str
     survey_date: date

@@ -26,7 +26,7 @@ def test_basic():
     assert wage_determination.location.zone.center.longitude == test_zone['center']['longitude']
     assert wage_determination.location.zone.radius_min == test_zone['radius_min']
     assert wage_determination.location.zone.radius_max == test_zone['radius_max']
-    assert wage_determination.construction_types == {ConstructionType.building}
+    assert wage_determination.construction_type == ConstructionType.building
     assert wage_determination.rate_identifier == test_wage_determination['rate_identifier']
     assert wage_determination.survey_date == date.fromisoformat(test_wage_determination['survey_date'])
     assert wage_determination.job.classification == test_job['classification']
