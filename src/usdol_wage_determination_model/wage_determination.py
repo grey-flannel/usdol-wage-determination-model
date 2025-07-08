@@ -1,7 +1,7 @@
 from datetime import date
 from enum import StrEnum
 
-from pydantic import BaseModel, Field, NonNegativeInt
+from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt
 
 from .date_range import DateRange
 from .job import Job
@@ -17,6 +17,8 @@ class ConstructionType(StrEnum):
 
 
 class WageDetermination(BaseModel):
+    model_config = ConfigDict(mode='json', exclude_none=True)
+
     decision_number: str = Field(pattern=r'^[A-Z]{2}[0-9]{8}$')
     modification_number: NonNegativeInt
     publication_date: date

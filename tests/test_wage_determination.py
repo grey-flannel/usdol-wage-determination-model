@@ -59,3 +59,11 @@ def test_bad_modification_numbers():
             check_error(error, 'Input should be a valid integer, got a number with a fractional part')
         else:
             check_error(error, 'Input should be a valid integer')
+
+
+def test_serialization():
+    wage_determination = WageDetermination(**test_wage_determination)
+    serialized_wage_determination = wage_determination.model_dump()
+    assert isinstance(serialized_wage_determination, dict)
+    deserialized_wage_determination = WageDetermination(**serialized_wage_determination)
+    assert wage_determination == deserialized_wage_determination
