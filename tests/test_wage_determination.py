@@ -1,6 +1,7 @@
 from copy import deepcopy
 from datetime import date
 from decimal import Decimal
+from orjson import loads
 
 from pydantic import ValidationError
 from pytest import raises
@@ -81,7 +82,6 @@ def test_survey_date_after_publication_date():
 
 def test_serialization():
     wage_determination = WageDetermination(**test_wage_determination)
-    serialized_wage_determination = wage_determination.model_dump()
-    assert isinstance(serialized_wage_determination, dict)
-    deserialized_wage_determination = WageDetermination(**serialized_wage_determination)
+    serialized_wage_determination = wage_determination.dump_json()
+    deserialized_wage_determination = WageDetermination(**loads(serialized_wage_determination))
     assert wage_determination == deserialized_wage_determination

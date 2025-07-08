@@ -1,5 +1,6 @@
 from datetime import date
 from enum import StrEnum
+from orjson import dumps
 
 from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt, model_validator
 
@@ -40,3 +41,6 @@ class WageDetermination(BaseModel):
             raise ValueError(f'Survey completion date of {self.survey_date} cannot be after ' +
                              f'publication date of {self.publication_date}')
         return self
+
+    def dump_json(self):
+        return dumps(self.model_dump(mode='json', exclude_none=True))
