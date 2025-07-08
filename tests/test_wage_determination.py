@@ -1,7 +1,7 @@
 from copy import deepcopy
 from datetime import date
 from decimal import Decimal
-from orjson import loads
+from json import loads
 
 from pydantic import ValidationError
 from pytest import raises
@@ -80,8 +80,25 @@ def test_survey_date_after_publication_date():
                        'publication date of 2025-01-01')
 
 
-def test_serialization():
+def test_serialization_with_all_values():
     wage_determination = WageDetermination(**test_wage_determination)
-    serialized_wage_determination = wage_determination.dump_json()
-    deserialized_wage_determination = WageDetermination(**loads(serialized_wage_determination))
+    serialized_wage_determination = wage_determination.model_dump_json()
+    serialized_wage_determination = loads(serialized_wage_determination)
+    deserialized_wage_determination = WageDetermination(**serialized_wage_determination)
     assert wage_determination == deserialized_wage_determination
+
+
+def test_serialization_without_optional_values():
+    test_no_zone_wage_determination = deepcopy(test_wage_determination)
+    del test_no_zone_wage_determination['location']['zone']
+    wage_determination = WageDetermination(**test_no_zone_wage_determination)
+    serialized_wage_determination = wage_determination.model_dump_json()
+    serialized_wage_determination = loads(serialized_wage_determination)
+    deserialized_wage_determination = WageDetermination(**serialized_wage_determination)
+    assert wage_determination == deserialized_wage_determination
+    wage_determination = WageDetermination(**test_no_zone_wage_determination)
+    serialized_wage_determination = wage_determination.model_dump_json(exclude_none=False)
+    serialized_wage_determination = loads(serialized_wage_determination)
+    with raises(ValidationError) as error:
+        WageDetermination(**serialized_wage_determination)
+    check_error(error, 'Input should be a valid dictionary or instance of Zone')

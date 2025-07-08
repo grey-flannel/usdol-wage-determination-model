@@ -1,6 +1,6 @@
 [project]
 name = "usdol-wage-determination-model"
-version = "0.2.2"
+version = "0.2.4"
 description = "Pydantic model for USDOL prevailing wage determination records"
 readme = "README.md"
 authors = [
@@ -8,7 +8,6 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "orjson>=3.10.18",
     "pycountry>=24.6.1",
     "pydantic>=2.11.7",
     "pydantic-extra-types>=2.10.5",

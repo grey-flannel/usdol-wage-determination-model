@@ -1,6 +1,5 @@
 from datetime import date
 from enum import StrEnum
-from orjson import dumps
 
 from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt, model_validator
 
@@ -42,5 +41,7 @@ class WageDetermination(BaseModel):
                              f'publication date of {self.publication_date}')
         return self
 
-    def dump_json(self):
-        return dumps(self.model_dump(mode='json', exclude_none=True))
+    def model_dump_json(self, *args, **kwargs):
+        if 'exclude_none' not in kwargs:
+            kwargs['exclude_none'] = True
+        return super().model_dump_json(*args, **kwargs)
