@@ -32,10 +32,7 @@ test_wage_determination = {
     'decision_number': 'CA00000001',
     'modification_number': 0,
     'publication_date': '2025-01-01',
-    'effective': {
-        'start_date': '2025-01-01',
-        'end_date': '2025-01-31',
-    },
+    'effective': test_date_range,
     'active': True,
     'location': test_location,
     'construction_type': 'building',

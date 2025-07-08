@@ -61,6 +61,24 @@ def test_bad_modification_numbers():
             check_error(error, 'Input should be a valid integer')
 
 
+def test_effective_date_before_publication_date():
+    test_bad_wage_determination = deepcopy(test_wage_determination)
+    test_bad_wage_determination['publication_date'] = '2026-01-01'
+    with raises(ValidationError) as error:
+        WageDetermination(**test_bad_wage_determination)
+    check_error(error, 'Value error, Effective start date of 2025-01-01 cannot be before ' +
+                       'publication date of 2026-01-01')
+
+
+def test_survey_date_after_publication_date():
+    test_bad_wage_determination = deepcopy(test_wage_determination)
+    test_bad_wage_determination['survey_date'] = '2026-01-01'
+    with raises(ValidationError) as error:
+        WageDetermination(**test_bad_wage_determination)
+    check_error(error, 'Value error, Survey completion date of 2026-01-01 cannot be after ' +
+                       'publication date of 2025-01-01')
+
+
 def test_serialization():
     wage_determination = WageDetermination(**test_wage_determination)
     serialized_wage_determination = wage_determination.model_dump()
