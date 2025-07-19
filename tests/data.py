@@ -60,3 +60,24 @@ bad_decision_numbers = (
 )
 
 bad_modification_numbers = (-1, 1.1, None)
+
+test_wage_determination_tuple = (
+    'CA00000001',
+    '0',
+    '2025-01-01',
+    '2025-01-01',
+    '2025-01-31',
+    'True',
+    'building',
+    'CA',
+    'San Diego',
+    '32.7157',
+    '117.1611',
+    '0.0',
+    '10.0',
+    '2024-01-01',
+    'Plumber',
+    'USD',
+    '123.45',
+    '12.34',
+)

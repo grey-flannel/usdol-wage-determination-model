@@ -1,7 +1,7 @@
 from datetime import date
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt, model_validator
+from pydantic import BaseModel, Field, NonNegativeInt, model_validator
 
 from .date_range import DateRange
 from .job import Job
@@ -17,8 +17,6 @@ class ConstructionType(StrEnum):
 
 
 class WageDetermination(BaseModel):
-    model_config = ConfigDict(mode='json', exclude_none=True)
-
     decision_number: str = Field(pattern=r'^[A-Z]{2}[0-9]{8}$')
     modification_number: NonNegativeInt
     publication_date: date
@@ -45,3 +43,25 @@ class WageDetermination(BaseModel):
         if 'exclude_none' not in kwargs:
             kwargs['exclude_none'] = True
         return super().model_dump_json(*args, **kwargs)
+
+    def model_dump_tuple(self, *args, **kwargs):
+        return (
+            self.decision_number,
+            str(self.modification_number),
+            self.publication_date.isoformat(),
+            self.effective.start_date.isoformat(),
+            self.effective.end_date.isoformat(),
+            str(self.active),
+            str(self.construction_type),
+            self.location.state,
+            self.location.county,
+            str(self.location.zone.center.latitude) if self.location.zone else '',
+            str(self.location.zone.center.longitude) if self.location.zone else '',
+            str(self.location.zone.radius_min) if self.location.zone else '',
+            str(self.location.zone.radius_max) if self.location.zone else '',
+            self.survey_date.isoformat(),
+            self.job.classification,
+            str(self.wage.currency),
+            str(self.wage.rate),
+            str(self.wage.fringe),
+        )

@@ -34,3 +34,5 @@ https://www.dol.gov/agencies/whd/government-contracts/construction/faq
   * Location: Validation of state (and maybe county?), also add county identifier
   * All: descriptions
 * Add docstrings and then enable "D" checks in ruff
+* Publish code on GitHub publicly (add link in pyproject.toml)
+* Add CI/CD in GitHub Actions using https://pypi.org/manage/account/publishing/

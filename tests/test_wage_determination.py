@@ -8,7 +8,7 @@ from pytest import raises
 
 from .common import check_error
 from .data import test_date_range, test_zone, test_location, test_job, test_wage, test_wage_determination
-from .data import bad_decision_numbers, bad_modification_numbers
+from .data import bad_decision_numbers, bad_modification_numbers, test_wage_determination_tuple
 
 from usdol_wage_determination_model import ConstructionType, WageDetermination
 
@@ -80,7 +80,7 @@ def test_survey_date_after_publication_date():
                        'publication date of 2025-01-01')
 
 
-def test_serialization_with_all_values():
+def test_dump_json_with_all_values():
     wage_determination = WageDetermination(**test_wage_determination)
     serialized_wage_determination = wage_determination.model_dump_json()
     serialized_wage_determination = loads(serialized_wage_determination)
@@ -88,7 +88,7 @@ def test_serialization_with_all_values():
     assert wage_determination == deserialized_wage_determination
 
 
-def test_serialization_without_optional_values():
+def test_dump_json_without_optional_values():
     test_no_zone_wage_determination = deepcopy(test_wage_determination)
     del test_no_zone_wage_determination['location']['zone']
     wage_determination = WageDetermination(**test_no_zone_wage_determination)
@@ -102,3 +102,10 @@ def test_serialization_without_optional_values():
     with raises(ValidationError) as error:
         WageDetermination(**serialized_wage_determination)
     check_error(error, 'Input should be a valid dictionary or instance of Zone')
+
+
+def test_dump_tuple_with_all_values():
+    wage_determination = WageDetermination(**test_wage_determination)
+    wage_determination_tuple = wage_determination.model_dump_tuple()
+    print(wage_determination_tuple)
+    assert wage_determination_tuple == test_wage_determination_tuple
