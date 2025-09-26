@@ -61,6 +61,7 @@ class WageDetermination(BaseModel):
             str(self.location.zone.radius_max) if self.location.zone else '',
             self.survey_date.isoformat(),
             self.job.classification,
+            self.job.subclassification,
             str(self.wage.currency),
             str(self.wage.rate),
             str(self.wage.fringe),

@@ -19,7 +19,8 @@ test_location = {
 }
 
 test_job = {
-    'classification': 'Plumber',
+    'classification': 'Welder',
+    'subclassification': 'Plumber',
 }
 
 test_wage = {
@@ -76,6 +77,7 @@ test_wage_determination_tuple = (
     '0.0',
     '10.0',
     '2024-01-01',
+    'Welder',
     'Plumber',
     'USD',
     '123.45',
