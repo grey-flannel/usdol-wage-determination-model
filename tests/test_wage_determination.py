@@ -107,5 +107,4 @@ def test_dump_json_without_optional_values():
 def test_dump_tuple_with_all_values():
     wage_determination = WageDetermination(**test_wage_determination)
     wage_determination_tuple = wage_determination.model_dump_tuple()
-    print(wage_determination_tuple)
     assert wage_determination_tuple == test_wage_determination_tuple
