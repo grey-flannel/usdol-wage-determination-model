@@ -26,6 +26,15 @@ def test_default_currency():
     assert wage.fringe == Decimal(test_wage['fringe'])
 
 
+def test_fractional_currency():
+    test_default_currency = deepcopy(test_wage)
+    del test_default_currency['currency']
+    wage = Wage(rate='123.4567', fringe='12.3456')
+    assert wage.currency == test_wage['currency']
+    assert wage.rate == Decimal('123.4567')
+    assert wage.fringe == Decimal('12.3456')
+
+
 def test_alternate_currency():
     test_alt_currency = deepcopy(test_wage)
     test_alt_currency['currency'] = 'EUR'
@@ -63,10 +72,14 @@ def test_bad_rate():
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
     check_error(error, 'Input should be greater than or equal to 0.0')
-    test_bad_currency['rate'] = '12.456'
+    test_bad_currency['rate'] = '12.45678'
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
-    check_error(error, 'Decimal input should have no more than 2 decimal places')
+    check_error(error, 'Decimal input should have no more than 4 decimal places')
+    test_bad_currency['rate'] = '1234.5678'
+    with raises(ValidationError) as error:
+        Wage(**test_bad_currency)
+    check_error(error, 'Decimal input should have no more than 7 digits in total')
 
 
 def test_bad_fringe():
@@ -83,7 +96,11 @@ def test_bad_fringe():
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
     check_error(error, 'Input should be greater than or equal to 0.0')
-    test_bad_currency['fringe'] = '12.456'
+    test_bad_currency['fringe'] = '12.45678'
     with raises(ValidationError) as error:
         Wage(**test_bad_currency)
-    check_error(error, 'Decimal input should have no more than 2 decimal places')
+    check_error(error, 'Decimal input should have no more than 4 decimal places')
+    test_bad_currency['fringe'] = '1234.5678'
+    with raises(ValidationError) as error:
+        Wage(**test_bad_currency)
+    check_error(error, 'Decimal input should have no more than 7 digits in total')
