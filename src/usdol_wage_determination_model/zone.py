@@ -10,5 +10,6 @@ class Zone(BaseModel):
     @model_validator(mode='after')
     def validate_radii(self):
         if self.radius_max <= self.radius_min:
-            raise ValueError(f'Max radius of {self.radius_max} must be larger than min radius of {self.radius_min}')
+            raise ValueError(f'Max radius of {self.radius_max} must be '
+                             f'larger than min radius of {self.radius_min}')
         return self

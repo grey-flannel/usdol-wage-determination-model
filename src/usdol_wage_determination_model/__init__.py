@@ -1,4 +1,4 @@
-from .date_range import DateRange as DateRange
+from .date_range import DateRange as DateRange  # noqa: F401
 from .job import Job as Job
 from .location import Location as Location
 from .wage import Wage as Wage

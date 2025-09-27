@@ -32,11 +32,11 @@ class WageDetermination(BaseModel):
     @model_validator(mode='after')
     def validate_dates(self):
         if self.effective.start_date < self.publication_date:
-            raise ValueError(f'Effective start date of {self.effective.start_date} cannot be before '
-                             f'publication date of {self.publication_date}')
+            raise ValueError(f'Effective start date of {self.effective.start_date} cannot '
+                             f'be before publication date of {self.publication_date}')
         if self.survey_date > self.publication_date:
-            raise ValueError(f'Survey completion date of {self.survey_date} cannot be after '
-                             f'publication date of {self.publication_date}')
+            raise ValueError(f'Survey completion date of {self.survey_date} cannot '
+                             f'be after publication date of {self.publication_date}')
         return self
 
     def model_dump_json(self, *args, **kwargs):
