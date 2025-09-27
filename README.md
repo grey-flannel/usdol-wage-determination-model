@@ -27,7 +27,7 @@ https://www.dol.gov/agencies/whd/government-contracts/construction/faq
 * Model adjustments
   * Job: add ID and perhaps an enumeration / taxonomy (US-wide or state specific?)
     * include level of journeyworker / apprentice / other?
-  * Wage: taxonomy for pay types (regular, overtime, double-time, hazard), validations, more flexible fringe
+  * Wage: taxonomy for pay types (regular, overtime, double-time, hazard), validations
   * Determination: validation for rate identifier and other fields
     * survey date before publication date
     * effective dates relation to publication date?

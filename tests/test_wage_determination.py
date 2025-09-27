@@ -33,7 +33,8 @@ def test_basic():
     assert wage_determination.job.classification == test_job['classification']
     assert wage_determination.wage.currency == test_wage['currency']
     assert wage_determination.wage.rate == Decimal(test_wage['rate'])
-    assert wage_determination.wage.fringe == Decimal(test_wage['fringe'])
+    assert wage_determination.wage.fringe.fixed == Decimal(test_wage['fringe']['fixed'])
+    assert wage_determination.wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
 
 
 def test_bad_decision_numbers():

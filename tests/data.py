@@ -26,7 +26,10 @@ test_job = {
 test_wage = {
     'currency': 'USD',
     'rate': '123.45',
-    'fringe': '12.34',
+    'fringe': {
+        'fixed': '12.34',
+        'percentage': '0.123',
+    },
 }
 
 test_wage_determination = {
@@ -82,4 +85,5 @@ test_wage_determination_tuple = (
     'USD',
     '123.45',
     '12.34',
+    '0.123',
 )

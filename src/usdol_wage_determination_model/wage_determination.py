@@ -27,7 +27,7 @@ class WageDetermination(BaseModel):
     rate_identifier: str
     survey_date: date
     job: Job
-    wage: Wage
+    wage: Wage = None
 
     @model_validator(mode='after')
     def validate_dates(self):
@@ -62,7 +62,8 @@ class WageDetermination(BaseModel):
             self.survey_date.isoformat(),
             self.job.classification,
             self.job.subclassification,
-            str(self.wage.currency),
-            str(self.wage.rate),
-            str(self.wage.fringe),
+            str(self.wage.currency) if self.wage else '',
+            str(self.wage.rate) if self.wage else '',
+            str(self.wage.fringe.fixed) if self.wage else '',
+            str(self.wage.fringe.percentage) if self.wage else '',
         )
