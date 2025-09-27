@@ -1,6 +1,6 @@
 [project]
 name = "usdol-wage-determination-model"
-version = "0.3.0"
+version = "0.3.1"
 description = "Pydantic model for USDOL prevailing wage determination records"
 readme = "README.md"
 authors = [
