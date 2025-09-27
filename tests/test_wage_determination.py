@@ -67,7 +67,7 @@ def test_effective_date_before_publication_date():
     test_bad_wage_determination['publication_date'] = '2026-01-01'
     with raises(ValidationError) as error:
         WageDetermination(**test_bad_wage_determination)
-    check_error(error, 'Value error, Effective start date of 2025-01-01 cannot be before ' +
+    check_error(error, 'Value error, Effective start date of 2025-01-01 cannot be before '
                        'publication date of 2026-01-01')
 
 
@@ -76,7 +76,7 @@ def test_survey_date_after_publication_date():
     test_bad_wage_determination['survey_date'] = '2026-01-01'
     with raises(ValidationError) as error:
         WageDetermination(**test_bad_wage_determination)
-    check_error(error, 'Value error, Survey completion date of 2026-01-01 cannot be after ' +
+    check_error(error, 'Value error, Survey completion date of 2026-01-01 cannot be after '
                        'publication date of 2025-01-01')
 
 

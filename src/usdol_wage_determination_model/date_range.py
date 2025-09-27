@@ -10,6 +10,6 @@ class DateRange(BaseModel):
     @model_validator(mode='after')
     def validate_end(self):
         if self.end_date < self.start_date:
-            raise ValueError(f'End date of {self.end_date} cannot be before ' +
+            raise ValueError(f'End date of {self.end_date} cannot be before '
                              f'start date of {self.start_date}')
         return self
