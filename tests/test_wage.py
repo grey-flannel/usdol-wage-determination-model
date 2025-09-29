@@ -43,7 +43,7 @@ def test_default_rate():
     del test_default_rate['rate']
     wage = Wage(**test_default_rate)
     assert wage.currency == 'USD'
-    assert wage.rate == 0.0
+    assert wage.rate == Decimal('0.0')
     assert wage.fringe.fixed == Decimal(test_wage['fringe']['fixed'])
     assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
 
@@ -54,8 +54,19 @@ def test_default_fringe():
     wage = Wage(**test_default_fringe)
     assert wage.currency == 'USD'
     assert wage.rate == Decimal(test_wage['rate'])
-    assert wage.fringe.fixed == 0.0
-    assert wage.fringe.percentage == 0.0
+    assert wage.fringe.fixed == Decimal('0.0')
+    assert wage.fringe.percentage == Decimal('0.0')
+
+
+def test_fractional_values():
+    test_fractional_values = deepcopy(test_wage)
+    test_fractional_values['rate'] = '123.456'
+    test_fractional_values['fringe']['fixed'] = '12.345'
+    wage = Wage(**test_fractional_values)
+    assert wage.currency == 'USD'
+    assert wage.rate == Decimal('123.456')
+    assert wage.fringe.fixed == Decimal('12.345')
+    assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
 
 
 def test_bad_currency():
@@ -80,14 +91,14 @@ def test_bad_rate():
     with raises(ValidationError) as error:
         Wage(**test_bad_rate)
     check_error(error, 'Input should be greater than or equal to 0.0')
-    test_bad_rate['rate'] = '12.345'
+    test_bad_rate['rate'] = '12.3456'
     with raises(ValidationError) as error:
         Wage(**test_bad_rate)
-    check_error(error, 'Decimal input should have no more than 2 decimal places')
-    test_bad_rate['rate'] = '1234.56'
+    check_error(error, 'Decimal input should have no more than 3 decimal places')
+    test_bad_rate['rate'] = '1234.567'
     with raises(ValidationError) as error:
         Wage(**test_bad_rate)
-    check_error(error, 'Decimal input should have no more than 5 digits in total')
+    check_error(error, 'Decimal input should have no more than 6 digits in total')
 
 
 def test_bad_fringe():
@@ -116,14 +127,14 @@ def test_bad_fringe():
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)
     check_error(error, 'Input should be greater than or equal to 0.0')
-    test_bad_fringe['fringe'] = {'fixed': '12.345'}
+    test_bad_fringe['fringe'] = {'fixed': '12.3456'}
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)
-    check_error(error, 'Decimal input should have no more than 2 decimal places')
-    test_bad_fringe['fringe'] = {'fixed': '1234.56'}
+    check_error(error, 'Decimal input should have no more than 3 decimal places')
+    test_bad_fringe['fringe'] = {'fixed': '1234.567'}
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)
-    check_error(error, 'Decimal input should have no more than 5 digits in total')
+    check_error(error, 'Decimal input should have no more than 6 digits in total')
     test_bad_fringe['fringe'] = {'percentage': None}
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)
