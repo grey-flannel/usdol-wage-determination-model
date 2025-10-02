@@ -10,12 +10,23 @@ from .data import test_wage
 from usdol_wage_determination_model import Wage
 
 
-def test_basic():
+def test_basic_values():
     wage = Wage(**test_wage)
     assert wage.currency == test_wage['currency']
     assert wage.rate == Decimal(test_wage['rate'])
     assert wage.fringe.fixed == Decimal(test_wage['fringe']['fixed'])
     assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
+
+
+def test_zero_values():
+    test_zero_values = deepcopy(test_wage)
+    test_zero_values['rate'] = '0.0'
+    test_zero_values['fringe'] = {'fixed': '0.0', 'percentage': '0.0'}
+    wage = Wage(**test_zero_values)
+    assert wage.currency == test_wage['currency']
+    assert wage.rate == Decimal('0.0')
+    assert wage.fringe.fixed == Decimal('0.0')
+    assert wage.fringe.percentage == Decimal('0.0')
 
 
 def test_default_currency():
@@ -38,24 +49,24 @@ def test_alternate_currency():
     assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
 
 
-def test_default_rate():
-    test_default_rate = deepcopy(test_wage)
-    del test_default_rate['rate']
-    wage = Wage(**test_default_rate)
-    assert wage.currency == 'USD'
-    assert wage.rate == Decimal('0.0')
-    assert wage.fringe.fixed == Decimal(test_wage['fringe']['fixed'])
-    assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
-
-
-def test_default_fringe():
-    test_default_fringe = deepcopy(test_wage)
-    del test_default_fringe['fringe']
-    wage = Wage(**test_default_fringe)
+def test_fringe_fixed_only():
+    test_fringe_fixed_only = deepcopy(test_wage)
+    del test_fringe_fixed_only['fringe']['percentage']
+    wage = Wage(**test_fringe_fixed_only)
     assert wage.currency == 'USD'
     assert wage.rate == Decimal(test_wage['rate'])
-    assert wage.fringe.fixed == Decimal('0.0')
-    assert wage.fringe.percentage == Decimal('0.0')
+    assert wage.fringe.fixed == Decimal(test_wage['fringe']['fixed'])
+    assert wage.fringe.percentage is None
+
+
+def test_fringe_percentage_only():
+    test_fringe_percentage_only = deepcopy(test_wage)
+    del test_fringe_percentage_only['fringe']['fixed']
+    wage = Wage(**test_fringe_percentage_only)
+    assert wage.currency == 'USD'
+    assert wage.rate == Decimal(test_wage['rate'])
+    assert wage.fringe.fixed is None
+    assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
 
 
 def test_fractional_values():
@@ -79,6 +90,10 @@ def test_bad_currency():
 
 def test_bad_rate():
     test_bad_rate = deepcopy(test_wage)
+    del test_bad_rate['rate']
+    with raises(ValidationError) as error:
+        Wage(**test_bad_rate)
+    check_error(error, 'Field required')
     test_bad_rate['rate'] = None
     with raises(ValidationError) as error:
         Wage(**test_bad_rate)
@@ -119,6 +134,10 @@ def test_bad_fringe():
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)
     check_error(error, 'Decimal input should be an integer, float, string or Decimal object')
+    test_bad_fringe['fringe'] = {}
+    with raises(ValidationError) as error:
+        Wage(**test_bad_fringe)
+    check_error(error, 'Value error, At least one of fixed or percentage must be provided')
     test_bad_fringe['fringe'] = {'fixed': 'foo'}
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)

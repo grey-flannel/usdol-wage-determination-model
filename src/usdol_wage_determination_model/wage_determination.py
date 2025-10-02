@@ -1,5 +1,6 @@
 from datetime import date
 from enum import StrEnum
+from typing import Annotated
 
 from pydantic import BaseModel, Field, NonNegativeInt, model_validator
 
@@ -17,7 +18,7 @@ class ConstructionType(StrEnum):
 
 
 class WageDetermination(BaseModel):
-    decision_number: str = Field(pattern=r'^[A-Z]{2}[0-9]{8}$')
+    decision_number: Annotated[str, Field(pattern=r'^[A-Z]{2}[0-9]{8}$')]
     modification_number: NonNegativeInt
     publication_date: date
     effective: DateRange
