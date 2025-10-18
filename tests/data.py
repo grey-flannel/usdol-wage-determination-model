@@ -44,6 +44,7 @@ test_wage_determination = {
     'survey_date': '2024-01-01',
     'job': test_job,
     'wage': test_wage,
+    'notes': 'Extra context goes here',
 }
 
 bad_decision_numbers = (
@@ -86,4 +87,5 @@ test_wage_determination_tuple = (
     '123.45',
     '12.34',
     '0.123',
+    'Extra context goes here',
 )

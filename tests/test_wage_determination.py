@@ -35,6 +35,14 @@ def test_basic():
     assert wage_determination.wage.rate == Decimal(test_wage['rate'])
     assert wage_determination.wage.fringe.fixed == Decimal(test_wage['fringe']['fixed'])
     assert wage_determination.wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
+    assert wage_determination.notes == test_wage_determination['notes']
+
+
+def test_no_notes():
+    no_notes_wage_determination = deepcopy(test_wage_determination)
+    del no_notes_wage_determination['notes']
+    wage_determination = WageDetermination(**no_notes_wage_determination)
+    assert wage_determination.notes is None
 
 
 def test_bad_decision_numbers():

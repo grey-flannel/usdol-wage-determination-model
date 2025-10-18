@@ -29,6 +29,7 @@ class WageDetermination(BaseModel):
     survey_date: date
     job: Job
     wage: Wage = None
+    notes: str = None
 
     @model_validator(mode='after')
     def validate_dates(self):
@@ -67,4 +68,5 @@ class WageDetermination(BaseModel):
             str(self.wage.rate) if self.wage else '',
             str(self.wage.fringe.fixed) if self.wage else '',
             str(self.wage.fringe.percentage) if self.wage else '',
+            self.notes if self.notes else '',
         )
