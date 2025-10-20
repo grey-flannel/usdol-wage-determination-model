@@ -1,20 +1,13 @@
 from datetime import date
-from enum import StrEnum
 from typing import Annotated
 
 from pydantic import BaseModel, Field, NonNegativeInt, model_validator
 
+from .construction_type import ConstructionType
 from .date_range import DateRange
 from .job import Job
 from .location import Location
 from .wage import Wage
-
-
-class ConstructionType(StrEnum):
-    building = 'building'
-    highway = 'highway'
-    heavy = 'heavy'
-    residential = 'residential'
 
 
 class WageDetermination(BaseModel):
@@ -68,5 +61,6 @@ class WageDetermination(BaseModel):
             str(self.wage.rate) if self.wage else '',
             str(self.wage.fringe.fixed) if self.wage else '',
             str(self.wage.fringe.percentage) if self.wage else '',
+            str(sorted(str(h) for h in self.wage.fringe.holidays)) if self.wage else '',
             self.notes if self.notes else '',
         )

@@ -29,6 +29,16 @@ test_wage = {
     'fringe': {
         'fixed': '12.34',
         'percentage': '0.123',
+        'holidays': [
+            'New Year\'s Day',
+            'Memorial Day',
+            'Independence Day',
+            'Labor Day',
+            'Veterans Day',
+            'Thanksgiving Day',
+            'Day After Thanksgiving',
+            'Christmas Day',
+        ],
     },
 }
 
@@ -87,5 +97,7 @@ test_wage_determination_tuple = (
     '123.45',
     '12.34',
     '0.123',
+    '''['Christmas Day', 'Day After Thanksgiving', 'Independence Day', 'Labor Day', '''
+    ''''Memorial Day', "New Year's Day", 'Thanksgiving Day', 'Veterans Day']''',
     'Extra context goes here',
 )

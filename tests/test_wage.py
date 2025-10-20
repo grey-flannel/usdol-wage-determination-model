@@ -7,7 +7,7 @@ from pytest import raises
 from .common import check_error
 from .data import test_wage
 
-from usdol_wage_determination_model import Wage
+from usdol_wage_determination_model import Holiday, Wage
 
 
 def test_basic_values():
@@ -78,6 +78,14 @@ def test_fractional_values():
     assert wage.rate == Decimal('123.456')
     assert wage.fringe.fixed == Decimal('12.345')
     assert wage.fringe.percentage == Decimal(test_wage['fringe']['percentage'])
+
+
+def test_holidays():
+    all_holidays = {h.value for h in Holiday}
+    test_holidays = deepcopy(test_wage)
+    test_holidays['fringe']['holidays'] = all_holidays
+    wage = Wage(**test_holidays)
+    assert wage.fringe.holidays == all_holidays
 
 
 def test_bad_currency():
@@ -178,3 +186,19 @@ def test_bad_fringe():
     with raises(ValidationError) as error:
         Wage(**test_bad_fringe)
     check_error(error, 'Decimal input should have no more than 4 digits in total')
+
+
+def test_bad_holidays():
+    test_bad_holidays = deepcopy(test_wage)
+    test_bad_holidays['fringe']['holidays'] = None
+    with raises(ValidationError) as error:
+        Wage(**test_bad_holidays)
+    check_error(error, 'Input should be a valid set')
+    test_bad_holidays['fringe']['holidays'] = 'Not A Holiday'
+    with raises(ValidationError) as error:
+        Wage(**test_bad_holidays)
+    check_error(error, 'Input should be a valid set')
+    test_bad_holidays['fringe']['holidays'] = {'Not A Holiday'}
+    with raises(ValidationError) as error:
+        Wage(**test_bad_holidays)
+    check_error(error, 'Input should be "New Year\'s Day"')
