@@ -1371,7 +1371,6 @@ name = "usdol-wage-determination-model"
 version = "0.3.3"
 source = { editable = "." }
 dependencies = [
-    { name = "flake8" },
     { name = "pycountry" },
     { name = "pydantic" },
     { name = "pydantic-extra-types" },
@@ -1380,6 +1379,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "bandit" },
+    { name = "flake8" },
     { name = "keyring" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -1389,7 +1389,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "flake8", specifier = ">=7.3.0" },
     { name = "pycountry", specifier = ">=24.6.1" },
     { name = "pydantic", specifier = ">=2.11.7" },
     { name = "pydantic-extra-types", specifier = ">=2.10.5" },
@@ -1398,6 +1397,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "bandit", specifier = ">=1.8.6" },
+    { name = "flake8", specifier = ">=7.3.0" },
     { name = "keyring", specifier = ">=25.6.0" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "pytest-cov", specifier = ">=6.2.1" },
