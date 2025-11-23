@@ -31,6 +31,7 @@ test_wage = {
         'percentage': '0.123',
         'holidays': [
             'New Year\'s Day',
+            'Martin Luther King Jr. Day',
             'Memorial Day',
             'Independence Day',
             'Labor Day',
@@ -97,7 +98,8 @@ test_wage_determination_tuple = (
     '123.45',
     '12.34',
     '0.123',
-    '''['Christmas Day', 'Day After Thanksgiving', 'Independence Day', 'Labor Day', '''
-    ''''Memorial Day', "New Year's Day", 'Thanksgiving Day', 'Veterans Day']''',
+    '''['Christmas Day', 'Day After Thanksgiving', 'Independence Day', '''
+    ''''Labor Day', 'Martin Luther King Jr. Day', 'Memorial Day', '''
+    '''"New Year's Day", 'Thanksgiving Day', 'Veterans Day']''',
     'Extra context goes here',
 )
